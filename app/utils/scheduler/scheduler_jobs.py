@@ -28,8 +28,6 @@ async def del_db_tasks(user: UserModel, db: AIOEngine, id_task):
 
 
 async def changing_task_time(bot: Bot, db: AIOEngine, user: UserModel, id_tasks, data_time):
-    print(user.tasks)
-    print(user.tasks[id_tasks][:-1:])
     title_channel, channel_id, message_id, from_chat_id = user.tasks[id_tasks][:-1:]
     await del_db_tasks(user, db, id_tasks)
     await save_db_tasks(bot, db, user, message_id, from_chat_id, data_time, channel_id, id_tasks)

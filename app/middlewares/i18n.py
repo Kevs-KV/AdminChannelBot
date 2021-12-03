@@ -1,10 +1,7 @@
 from dataclasses import dataclass, field
-from functools import partial
-from pathlib import Path
+from typing import Any, Tuple
 
-import i18n
-from aiogram import types, Bot
-from aiogram.dispatcher.middlewares import BaseMiddleware
+from aiogram.contrib.middlewares.i18n import I18nMiddleware as BaseI18nMiddleware
 
 
 @dataclass
@@ -17,27 +14,14 @@ class LanguageData:
         self.label = f"{self.flag} {self.title}"
 
 
-class I18nMiddleware(BaseMiddleware):
+class I18nMiddleware(BaseI18nMiddleware):
     AVAILABLE_LANGUAGES = {
-        "en": LanguageData("🇬🇧", "English"),
+        "en": LanguageData("🇺🇸", "English"),
         "ru": LanguageData("🇷🇺", "Русский"),
     }
 
-    def __init__(self, path: Path, default='en'):
-        super(I18nMiddleware, self).__init__()
-
-        self.default = default
-        i18n.load_path.append(path)
-        self.i18n = i18n
-
-    async def get_user_locale(self, data: dict):
-        language = self.default
+    async def get_user_locale(self, action: str, args: Tuple[Any]) -> str:
+        data: dict = args[-1]
         if "user" in data:
-            language = data["user"].real_language or self.default
-        data["t"] = partial(self.i18n.t, locale=language)
-
-    async def on_pre_process_message(self, _: types.Message, data: dict):
-        await self.get_user_locale(data)
-
-    async def on_pre_process_callback_query(self, _: types.CallbackQuery, data: dict):
-        await self.get_user_locale(data)
+            return data["user"].language or self.default
+        return self.default

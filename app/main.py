@@ -1,5 +1,6 @@
 import logging
 
+from app.middlewares.i18n import I18nMiddleware
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.mongo import MongoStorage
 from aiogram.utils.executor import start_polling
@@ -17,7 +18,6 @@ from app.utils.set_bot_commands import set_commands
 
 async def on_startup(dp):
     middlewares.setup(dp)
-    middlewares.setup_i18n(dp, Config.LOCALES_PATH)
     filters.setup(dp)
     handlers.setup_all_handlers(dp)
     logger.setup_logger()
@@ -44,7 +44,6 @@ async def on_shutdown(dp):
         await mongo.close()
         await mongo.wait_closed()
     logging.warning("Bye!")
-    ""
 
 
 def main():
@@ -58,4 +57,6 @@ def main():
 
     )
     dp = Dispatcher(bot, storage=storage)
+    i18n = I18nMiddleware("bot", path=Config.LOCALES_PATH)
+    bot["i18n"] = i18n
     start_polling(dp, on_startup=on_startup, on_shutdown=on_shutdown)

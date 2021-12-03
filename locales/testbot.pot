@@ -1,0 +1,75 @@
+# Translations template for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-12-03 14:32+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: app/handlers/channels/poster.py:22
+msgid "Выберите канал для публикации"
+msgstr ""
+
+#: app/handlers/channels/poster.py:31
+msgid "Вы уверены?"
+msgstr ""
+
+#: app/handlers/channels/scheduler_control.py:39
+msgid "Выберите  действие"
+msgstr ""
+
+#: app/handlers/channels/scheduler_control.py:45
+msgid "Отмена"
+msgstr ""
+
+#: app/handlers/channels/scheduler_control.py:48
+msgid "Изменить время"
+msgstr ""
+
+#: app/handlers/channels/scheduler_control.py:49
+msgid "Пришлите время постинга в формате Час/Минута/День/Мес/Год"
+msgstr ""
+
+#: app/handlers/channels/scheduler_control.py:51
+msgid "Удалить"
+msgstr ""
+
+#: app/handlers/channels/scheduler_control.py:55
+msgid "Задача отменена"
+msgstr ""
+
+#: app/handlers/channels/scheduler_control.py:58
+msgid "Нет такой команды"
+msgstr ""
+
+#: app/handlers/channels/start_bot_channels.py:14
+msgid "Добавьте своего бота"
+msgstr ""
+
+#: app/handlers/channels/start_bot_channels.py:26
+msgid "Проверка пройдена"
+msgstr ""
+
+#: app/handlers/channels/start_bot_channels.py:30
+msgid "Проверка не пройдена"
+msgstr ""
+
+#: app/handlers/channels/start_bot_channels.py:32
+msgid "Бот не имеет доступа к каналу"
+msgstr ""
+
+#: app/handlers/channels/start_bot_channels.py:38
+msgid "Ваши каналы:"
+msgstr ""
+

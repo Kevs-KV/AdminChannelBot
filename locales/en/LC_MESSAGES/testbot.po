@@ -1,0 +1,76 @@
+# English translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-12-03 12:54+0300\n"
+"PO-Revision-Date: 2021-12-03 12:54+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: app/handlers/channels/poster.py:22
+msgid "Выберите канал для публикации"
+msgstr "Select a channel to post"
+
+#: app/handlers/channels/poster.py:31
+msgid "Are you sure?"
+msgstr ""
+
+#: app/handlers/channels/scheduler_control.py:39
+msgid "Выберите  действие"
+msgstr "Choose an action"
+
+#: app/handlers/channels/scheduler_control.py:45
+msgid "Отмена"
+msgstr "Cancel"
+
+#: app/handlers/channels/scheduler_control.py:48
+msgid "Изменить время"
+msgstr "Change time"
+
+#: app/handlers/channels/scheduler_control.py:49
+msgid "Пришлите время постинга в формате Час/Минута/День/Мес/Год"
+msgstr "Send posting time in Hour/Minute/Day/Month/Year format"
+
+#: app/handlers/channels/scheduler_control.py:51
+msgid "Удалить"
+msgstr "Delete"
+
+#: app/handlers/channels/scheduler_control.py:55
+msgid "Задача отменена"
+msgstr "Task canceled"
+
+#: app/handlers/channels/scheduler_control.py:58
+msgid "Нет такой команды"
+msgstr "There is no such command"
+
+#: app/handlers/channels/start_bot_channels.py:14
+msgid "Добавьте своего бота"
+msgstr "Add your bot"
+
+#: app/handlers/channels/start_bot_channels.py:26
+msgid "Проверка пройдена"
+msgstr "Check passed"
+
+#: app/handlers/channels/start_bot_channels.py:30
+msgid "Проверка не пройдена"
+msgstr "Check failed"
+
+#: app/handlers/channels/start_bot_channels.py:32
+msgid "Бот не имеет доступа к каналу"
+msgstr "The bot does not have access to the channel"
+
+#: app/handlers/channels/start_bot_channels.py:38
+msgid "Ваши каналы:"
+msgstr "Your channels:"
+
