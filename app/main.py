@@ -44,6 +44,7 @@ async def on_shutdown(dp):
         await mongo.close()
         await mongo.wait_closed()
     logging.warning("Bye!")
+    ""
 
 
 def main():
