@@ -10,8 +10,9 @@ from app.states.bot_states import PostChannelUser
 from app.utils.scheduler.scheduler_jobs import scheduler_jobs, save_db_tasks
 
 
-async def start_message_in_post(m: Message):
-    await m.answer('Напишите текст для публикации')
+async def start_message_in_post(m: Message, _: i18n):
+    print(_('Напишите текст для публикации'))
+    await m.answer(_('Напишите текст для публикации'))
     await PostChannelUser.text.set()
 
 
@@ -35,7 +36,7 @@ async def add_channel_for_post(query: CallbackQuery, state: FSMContext, callback
 async def posting_in_channel(query: CallbackQuery, _: i18n):
     await query.message.edit_reply_markup()
     await query.message.delete()
-    await query.message.answer('Пришлите время постинга в формате Час/Минута/День/Мес/Год')
+    await query.message.answer(_('Пришлите время постинга в формате Час/Минута/День/Мес/Год'))
     await PostChannelUser.data_time.set()
 
 
@@ -43,7 +44,7 @@ async def time_posting_in_channel(m: Message, bot: Bot, state: FSMContext, db: A
     data_time = [int(data) for data in m.text.split('/')]
     result = await state.get_data()
     channel_id = result.get('channel_id')
-    await m.answer('Готово')
+    await m.answer(_('Готово'))
     await state.finish()
     user_id = m.from_user.id
     post = user.posts + 1

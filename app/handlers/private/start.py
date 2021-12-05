@@ -1,11 +1,7 @@
 import functools
-import types
-from aiogram.dispatcher import FSMContext
+
 from aiogram import Dispatcher
 from aiogram.types import Message
-
-from app.models import UserModel
-from app.states.bot_states import AddChannels
 
 
 async def get_start_message(m: Message, t: functools.partial):

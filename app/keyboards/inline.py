@@ -69,12 +69,10 @@ class ChoiceChannelForPost(InlineMarkupConstructor):
 
     async def get(self):
         channels_user = self.user.channels
-        print(channels_user)
         schema = []
         actions = []
         for channel in channels_user:
             channel_info = await self.bot.get_chat(chat_id=channel)
-            print(channel_info)
             title = channel_info["title"]
             id = str(channel_info["id"])
             actions.append({'text': title, "callback_data": self.callback_data.new(id)})
@@ -94,7 +92,6 @@ class TaskChannelMarkup(InlineMarkupConstructor):
     async def get(self):
         try:
             tasks_user = self.user.tasks
-            print(tasks_user)
             schema = []
             actions = []
             for task in tasks_user:
@@ -107,7 +104,6 @@ class TaskChannelMarkup(InlineMarkupConstructor):
             return None
 
 
-
 class ActionTaskChannel(InlineMarkupConstructor):
     callback_data = CallbackData('id', 'value')
 
@@ -118,4 +114,17 @@ class ActionTaskChannel(InlineMarkupConstructor):
             {'text': 'Удалить', "callback_data": self.callback_data.new('Удалить')},
             {'text': 'Изменить время', "callback_data": self.callback_data.new('Изменить время')}]
 
+        return self.markup(actions, schema)
+
+
+class ChoiceLanguageUser(InlineMarkupConstructor):
+    callback_data = CallbackData('id', 'language')
+
+    def get(self):
+        schema = [1, 1]
+
+        actions = [
+            {'text': 'ru', 'callback_data': self.callback_data.new('ru')},
+            {'text': 'en', 'callback_data': self.callback_data.new('en')},
+        ]
         return self.markup(actions, schema)

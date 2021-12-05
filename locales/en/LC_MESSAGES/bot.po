@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-03 12:54+0300\n"
-"PO-Revision-Date: 2021-12-03 12:54+0300\n"
+"POT-Creation-Date: 2021-12-05 12:50+0300\n"
+"PO-Revision-Date: 2021-12-05 12:50+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -18,13 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: app/handlers/channels/poster.py:22
+#: app/handlers/channels/poster.py:14 app/handlers/channels/poster.py:15
+msgid "Напишите текст для публикации"
+msgstr "Write text for publication"
+
+#: app/handlers/channels/poster.py:23
 msgid "Выберите канал для публикации"
 msgstr "Select a channel to post"
 
-#: app/handlers/channels/poster.py:31
-msgid "Are you sure?"
-msgstr ""
+#: app/handlers/channels/poster.py:32
+msgid "Вы уверены?"
+msgstr "Are you sure?"
+
+#: app/handlers/channels/poster.py:39
+#: app/handlers/channels/scheduler_control.py:49
+msgid "Пришлите время постинга в формате Час/Минута/День/Мес/Год"
+msgstr "Send posting time in Hour/Minute/Day/Month/Year format"
+
+#: app/handlers/channels/poster.py:47
+msgid "Готово"
+msgstr "Ready"
+
+#: app/handlers/channels/scheduler_control.py:23
+msgid "Нет задач"
+msgstr "No tasks"
+
+#: app/handlers/channels/scheduler_control.py:28
+msgid "Список задач в палировщике"
+msgstr "Paler Task List"
 
 #: app/handlers/channels/scheduler_control.py:39
 msgid "Выберите  действие"
@@ -34,13 +55,13 @@ msgstr "Choose an action"
 msgid "Отмена"
 msgstr "Cancel"
 
+#: app/handlers/channels/scheduler_control.py:46
+msgid "Отменено"
+msgstr "Canceled"
+
 #: app/handlers/channels/scheduler_control.py:48
 msgid "Изменить время"
 msgstr "Change time"
-
-#: app/handlers/channels/scheduler_control.py:49
-msgid "Пришлите время постинга в формате Час/Минута/День/Мес/Год"
-msgstr "Send posting time in Hour/Minute/Day/Month/Year format"
 
 #: app/handlers/channels/scheduler_control.py:51
 msgid "Удалить"
@@ -64,7 +85,7 @@ msgstr "Check passed"
 
 #: app/handlers/channels/start_bot_channels.py:30
 msgid "Проверка не пройдена"
-msgstr "Check failed"
+msgstr "Check passed"
 
 #: app/handlers/channels/start_bot_channels.py:32
 msgid "Бот не имеет доступа к каналу"
@@ -73,4 +94,3 @@ msgstr "The bot does not have access to the channel"
 #: app/handlers/channels/start_bot_channels.py:38
 msgid "Ваши каналы:"
 msgstr "Your channels:"
-

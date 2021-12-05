@@ -20,12 +20,12 @@ async def get_list_posting(m: Message, user: UserModel, _: i18n):
             list_posting.append(f'{title} {user.tasks[task][-1]}')
         await m.answer("\n".join(list_posting))
     except MessageTextIsEmpty:
-        await m.answer('Нет задач')
+        await m.answer(_('Нет задач'))
 
 
 async def scheduler_jobs_list(m: Message, user: UserModel, bot: Bot, _: i18n):
     list_task = await TaskChannelMarkup(user, bot).get()
-    await m.answer('Список задач в палировщике', reply_markup=list_task)
+    await m.answer(_('Список задач в палировщике'), reply_markup=list_task)
 
 
 async def view_post(query: CallbackQuery, user: UserModel, state: FSMContext, bot: Bot, _: i18n, callback_data: dict):
@@ -43,7 +43,7 @@ async def view_post(query: CallbackQuery, user: UserModel, state: FSMContext, bo
 async def action_channel(m: Message, user: UserModel, state: FSMContext, db: AIOEngine, _: i18n):
     action = m.text
     if action == _('Отмена'):
-        await m.answer('Отменено', reply_markup=ReplyKeyboardRemove())
+        await m.answer(_('Отменено'), reply_markup=ReplyKeyboardRemove())
         await state.finish()
     elif action == _('Изменить время'):
         await m.answer(_('Пришлите время постинга в формате Час/Минута/День/Мес/Год'), reply_markup=ReplyKeyboardRemove())
