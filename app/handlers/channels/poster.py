@@ -2,16 +2,15 @@ from aiogram import Dispatcher, Bot, types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery
 from odmantic import AIOEngine
-from app.middlewares import i18n
-# from bson.json_util import dumps, loads, object_hook
+
 from app.keyboards.inline import ChoiceChannelForPost, ConfirmationMarkup
+from app.middlewares import i18n
 from app.models import UserModel
 from app.states.bot_states import PostChannelUser
 from app.utils.scheduler.scheduler_jobs import scheduler_jobs, save_db_tasks
 
 
 async def start_message_in_post(m: Message, _: i18n):
-    print(_('Напишите текст для публикации'))
     await m.answer(_('Напишите текст для публикации'))
     await PostChannelUser.text.set()
 

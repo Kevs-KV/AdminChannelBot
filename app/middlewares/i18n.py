@@ -23,6 +23,5 @@ class I18nMiddleware(BaseI18nMiddleware):
     async def get_user_locale(self, action: str, args: Tuple[Any]) -> str:
         data: dict = args[-1]
         if "user" in data:
-            print(data["user"].language, self.default)
             return data["user"].language or self.default
         return self.default
