@@ -1,11 +1,11 @@
-import functools
-
 from aiogram import Dispatcher
 from aiogram.types import Message
 
+from app.middlewares import i18n
 
-async def get_start_message(m: Message, t: functools.partial):
-    await m.answer(t("locale.start"))
+
+async def get_start_message(m: Message, _: i18n):
+    await m.answer(_('Привет, данный бот предназначен для администрования телеграм каналов, '))
 
 
 def setup(dp: Dispatcher):

@@ -1,7 +1,7 @@
 import logging
 
-from aiogram import Dispatcher, Bot
-from aiogram.types import Message, ChatMemberOwner, ContentTypes
+from aiogram import Dispatcher
+from aiogram.types import Message, ContentTypes
 
 
 async def new_post(m: Message):
