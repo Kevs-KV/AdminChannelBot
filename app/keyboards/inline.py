@@ -68,18 +68,20 @@ class ChoiceChannelForPost(InlineMarkupConstructor):
         self.bot = bot
 
     async def get(self):
-        channels_user = self.user.channels
-        schema = []
-        actions = []
-        for channel in channels_user:
-            channel_info = await self.bot.get_chat(chat_id=channel)
-            title = channel_info["title"]
-            id = str(channel_info["id"])
-            actions.append({'text': title, "callback_data": self.callback_data.new(id)})
-            schema.append(1)
+        try:
+            channels_user = self.user.channels
+            schema = []
+            actions = []
+            for channel in channels_user:
+                channel_info = await self.bot.get_chat(chat_id=channel)
+                title = channel_info["title"]
+                id = str(channel_info["id"])
+                actions.append({'text': title, "callback_data": self.callback_data.new(id)})
+                schema.append(1)
 
-        return self.markup(actions, schema)
-
+            return self.markup(actions, schema)
+        except ValueError:
+            return None
 
 class TaskChannelMarkup(InlineMarkupConstructor):
     callback_data = CallbackData('id', 'value')
