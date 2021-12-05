@@ -32,11 +32,16 @@ async def add_channel_for_post(query: CallbackQuery, state: FSMContext, callback
     await PostChannelUser.confirmation.set()
 
 
-async def posting_in_channel(query: CallbackQuery, _: i18n):
+async def posting_in_channel(query: CallbackQuery,  user: UserModel, bot: Bot, callback_data: dict,  _: i18n):
     await query.message.edit_reply_markup()
     await query.message.delete()
-    await query.message.answer(_('Пришлите время постинга в формате Час/Минута/День/Мес/Год'))
-    await PostChannelUser.data_time.set()
+    if callback_data["agreement"] == 'yes':
+        await query.message.answer(_('Пришлите время постинга в формате Час/Минута/День/Мес/Год'))
+        await PostChannelUser.data_time.set()
+    else:
+        markup = await ChoiceChannelForPost(user, bot).get()
+        await query.message.answer(_('Выберите канал для публикации'), reply_markup=markup)
+        await PostChannelUser.channel.set()
 
 
 async def time_posting_in_channel(m: Message, bot: Bot, state: FSMContext, db: AIOEngine, user: UserModel, _: i18n):
