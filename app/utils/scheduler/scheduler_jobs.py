@@ -2,9 +2,8 @@ from datetime import datetime
 
 from aiogram import Bot
 from odmantic import AIOEngine
-
 from app.models import UserModel
-
+from dateutil import tz
 
 async def send_message_channels(bot: Bot, user: UserModel, message_id, from_chat_id, db: AIOEngine, channel_id,
                                 id_tasks):
@@ -38,5 +37,6 @@ async def changing_task_time(bot: Bot, db: AIOEngine, user: UserModel, id_tasks,
 
 def scheduler_jobs(db: AIOEngine, user: UserModel, message_id, from_chat_id, bot, channel_id, data_time, id_tasks):
     hour, minute, day, month, year = data_time
-    bot['scheduler'].add_job(send_message_channels, "date", run_date=datetime(year, month, day, hour, minute),
+    timezone = tz.gettz('Europe / Moscow')
+    bot['scheduler'].add_job(send_message_channels, "date", run_date=datetime(year, month, day, hour, minute, tzinfo=timezone),
                              args=(bot, user, message_id, from_chat_id, db, channel_id, id_tasks), id=id_tasks)
