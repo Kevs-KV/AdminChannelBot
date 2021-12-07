@@ -15,7 +15,6 @@ async def get_start_message(message: Message):
         "🇷🇺 Выберите язык:\n\n" "🇬🇧 Choose your language:",
         reply_markup=markup,
     )
-    print(pytz.all_timezones)
     await LanguageUser.start.set()
 
 
