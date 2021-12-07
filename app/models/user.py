@@ -14,6 +14,7 @@ class UserRoles(str, Enum):
 class UserModel(Model):
     id: int = Field(primary_field=True)
     language: str = 'en'
+    timezone: str = 'Etc/GMT-3'
     real_language: str = 'en'
     role: UserRoles = Field(default=UserRoles.new)
     created_at: datetime = Field(default=datetime.now())
