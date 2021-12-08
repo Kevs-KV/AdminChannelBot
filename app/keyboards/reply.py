@@ -21,14 +21,24 @@ class ExampleReplyMarkup(ReplyMarkupConstructor):
         return self.markup(actions, schema)
 
 
-
 class ActionTaskChannel(ReplyMarkupConstructor):
 
-    def get(self):
+    def get(self, _):
         schema = [1, 1, 1]
         actions = [
-            {'text': 'Отмена', },
-            {'text': 'Удалить', },
-            {'text': 'Изменить время', }]
+            {'text': _('Отмена'), },
+            {'text': _('Удалить'), },
+            {'text': _('Изменить время'), }]
+
+        return self.markup(actions, schema)
+
+
+class CancelUserAction(ReplyMarkupConstructor):
+
+    def get(self):
+        schema = [1]
+        actions = [{
+            'text': 'cancel'
+        }]
 
         return self.markup(actions, schema)
