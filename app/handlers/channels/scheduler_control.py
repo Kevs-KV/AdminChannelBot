@@ -34,7 +34,7 @@ async def view_post(query: CallbackQuery, user: UserModel, state: FSMContext, bo
     task = user.tasks[callback_data['value']]
     await state.update_data(task_id=task_id)
     title_channel, channel_id, message_id, from_chat_id, data_time = task
-    markup = ActionTaskChannel().get()
+    markup = ActionTaskChannel().get(_)
     await bot.copy_message(chat_id=from_chat_id, message_id=message_id, from_chat_id=from_chat_id)
     await query.message.answer(_('Выберите  действие'), reply_markup=markup)
     await ActionForTask.action.set()

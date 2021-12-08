@@ -27,7 +27,7 @@ async def add_channel_for_post(query: CallbackQuery, state: FSMContext, callback
     await query.message.edit_reply_markup()
     await query.message.delete()
     await state.update_data(channel_id=int(callback_data['value']))
-    confirmation = await ConfirmationMarkup().get()
+    confirmation = await ConfirmationMarkup().get(_)
     await query.message.answer(_('Вы уверены?'), reply_markup=confirmation)
     await PostChannelUser.confirmation.set()
 

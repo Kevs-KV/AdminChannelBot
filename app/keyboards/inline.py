@@ -51,10 +51,10 @@ class ChannelUserMarkup(InlineMarkupConstructor):
 class ConfirmationMarkup(InlineMarkupConstructor):
     callback_data = CallbackData("confirmation", "agreement")
 
-    async def get(self):
+    async def get(self, _):
         schema = [2]
-        actions = [{'text': 'Да', "callback_data": self.callback_data.new('yes')},
-                   {'text': 'Нет', "callback_data": self.callback_data.new('no')}]
+        actions = [{'text': _('Да'), "callback_data": self.callback_data.new('yes')},
+                   {'text': _('Нет'), "callback_data": self.callback_data.new('no')}]
 
         return self.markup(actions, schema)
 
@@ -109,12 +109,12 @@ class TaskChannelMarkup(InlineMarkupConstructor):
 class ActionTaskChannel(InlineMarkupConstructor):
     callback_data = CallbackData('id', 'value')
 
-    def get(self):
+    def get(self, _):
         schema = [1, 1, 1]
         actions = [
-            {'text': 'Отмена', "callback_data": self.callback_data.new('Отмена')},
-            {'text': 'Удалить', "callback_data": self.callback_data.new('Удалить')},
-            {'text': 'Изменить время', "callback_data": self.callback_data.new('Изменить время')}]
+            {'text': 'Отмена', "callback_data": self.callback_data.new(_('Отмена'))},
+            {'text': 'Удалить', "callback_data": self.callback_data.new(_('Удалить'))},
+            {'text': 'Изменить время', "callback_data": self.callback_data.new(_('Изменить время'))}]
 
         return self.markup(actions, schema)
 
