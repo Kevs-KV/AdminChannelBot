@@ -1,9 +1,11 @@
 from datetime import datetime
 
 from aiogram import Bot
+from aiogram.utils.exceptions import BotKicked
 from odmantic import AIOEngine
 from pytz import timezone
 
+from app.middlewares import i18n
 from app.models import UserModel
 
 
@@ -28,23 +30,20 @@ async def del_db_tasks(user: UserModel, db: AIOEngine, id_task):
     await db.save(user)
 
 
-async def changing_task_time(bot: Bot, db: AIOEngine, user: UserModel, id_tasks, data_time):
+async def changing_task_time(bot: Bot, db: AIOEngine, _: i18n, user: UserModel, id_tasks, data_time):
     title_channel, channel_id, message_id, from_chat_id = user.tasks[id_tasks][:-1:]
     await del_db_tasks(user, db, id_tasks)
     await save_db_tasks(bot, db, user, message_id, from_chat_id, data_time, channel_id, id_tasks)
     bot['scheduler'].remove_job(id_tasks)
-    return scheduler_jobs(db, user, message_id, from_chat_id, bot, channel_id, data_time, id_tasks)
+    return scheduler_jobs(db, user, _, message_id, from_chat_id, bot, channel_id, data_time, id_tasks)
 
 
-def scheduler_jobs(db: AIOEngine, user: UserModel, message_id, from_chat_id, bot, channel_id, data_time, id_tasks):
-    hour, minute, day, month, year = data_time
-    user_timezone = timezone(user.timezone)
-    print(user_timezone)
-    vastern = timezone('Africa/Johannesburg')
-    loc_dt = vastern.localize(datetime(2002, 10, 27, 6, 0, 0))
-    print(loc_dt )
-    print(user_timezone.localize(datetime(year, month, day, hour, minute)))
-    print(datetime(year, month, day, hour, minute))
-    bot['scheduler'].add_job(send_message_channels, "date",
-                             run_date=user_timezone.localize(datetime(year, month, day, hour, minute)),
-                             args=(bot, user, message_id, from_chat_id, db, channel_id, id_tasks), id=id_tasks)
+def scheduler_jobs(db: AIOEngine, user: UserModel, _: i18n, message_id, from_chat_id, bot, channel_id, data_time, id_tasks):
+    try:
+        hour, minute, day, month, year = data_time
+        user_timezone = timezone(user.timezone)
+        bot['scheduler'].add_job(send_message_channels, "date",
+                                 run_date=user_timezone.localize(datetime(year, month, day, hour, minute)),
+                                 args=(bot, user, message_id, from_chat_id, db, channel_id, id_tasks), id=id_tasks)
+    except BotKicked:
+        return bot.send_message(chat_id=from_chat_id, text=_('Бот не имеет доступа к каналу'))

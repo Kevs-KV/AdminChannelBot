@@ -24,14 +24,21 @@ async def add_channels_user(m: Message, db: AIOEngine, bot: Bot, user: UserModel
         user_id = m.from_user.id
         valid = await valid_admin_in_channels(m, admins_chat, user_id, _)
         if valid:
-            await m.answer(_('Канал добавлен'))
-            user.channels.append(channel)
-            await db.save(user)
+            if channel not in user.channels:
+                await m.answer(_('Канал добавлен'))
+                user.channels.append(channel)
+                await db.save(user)
+                await state.finish()
+            else:
+                await m.answer(_('Канал уже был дабавлен'))
+                await state.finish()
         else:
             await m.answer(_('Вы не являетесь администратором канала'))
     except BotKicked:
         await m.answer(_('Бот не имеет доступа к каналу'))
         await state.finish()
+    except TypeError:
+        await m.answer(_('Перешлите публикацию из канала'))
 
 
 async def user_channels(m: Message, user: UserModel, bot: Bot, _: i18n):

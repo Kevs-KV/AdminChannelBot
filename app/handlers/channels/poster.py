@@ -1,6 +1,7 @@
 from aiogram import Dispatcher, Bot, types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery
+from aiogram.utils.exceptions import BotKicked
 from odmantic import AIOEngine
 
 from app.keyboards.inline import ChoiceChannelForPost, ConfirmationMarkup
@@ -16,11 +17,15 @@ async def start_message_in_post(m: Message, _: i18n):
 
 
 async def add_text_post(m: Message, state: FSMContext, user: UserModel, bot: Bot, _: i18n):
-    await state.update_data(message_id=m.message_id)
-    await state.update_data(from_chat_id=m.chat.id)
-    markup = await ChoiceChannelForPost(user, bot).get()
-    await m.answer(_('Выберите канал для публикации'), reply_markup=markup)
-    await PostChannelUser.channel.set()
+    try:
+        await state.update_data(message_id=m.message_id)
+        await state.update_data(from_chat_id=m.chat.id)
+        markup = await ChoiceChannelForPost(user, bot).get()
+        await m.answer(_('Выберите канал для публикации'), reply_markup=markup)
+        await PostChannelUser.channel.set()
+    except BotKicked:
+        await m.answer(_('У вас нет каналов, добавьте свой канал - /add_channel'))
+        await state.finish()
 
 
 async def add_channel_for_post(query: CallbackQuery, state: FSMContext, callback_data: dict, _: i18n):
@@ -56,7 +61,7 @@ async def time_posting_in_channel(m: Message, bot: Bot, state: FSMContext, db: A
     message_id = result.get('message_id')
     from_chat_id = result.get('from_chat_id')
     await save_db_tasks(bot, db, user, message_id, from_chat_id, data_time, channel_id, id_tasks)
-    return scheduler_jobs(db, user, message_id, from_chat_id, bot, channel_id, data_time, id_tasks)
+    return scheduler_jobs(db, user, _, message_id, from_chat_id, bot, channel_id, data_time, id_tasks)
 
 
 def setup(dp: Dispatcher):

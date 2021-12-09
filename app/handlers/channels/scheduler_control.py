@@ -59,11 +59,11 @@ async def action_channel(m: Message, user: UserModel, state: FSMContext, db: AIO
         await m.answer(_('Нет такой команды'))
 
 
-async def new_time_for_post(m: Message, bot: Bot, user: UserModel, state: FSMContext, db: AIOEngine):
+async def new_time_for_post(m: Message, bot: Bot, user: UserModel, state: FSMContext, db: AIOEngine, _: i18n):
     data_time = [int(data) for data in m.text.split('/')]
     result = await state.get_data()
     task_id = result.get('task_id')
-    await changing_task_time(bot, db, user, task_id, data_time)
+    await changing_task_time(bot, db, _, user, task_id, data_time)
     await state.finish()
 
 
