@@ -11,4 +11,4 @@ async def user_command_cancel_state(m: Message, state: FSMContext, _: i18n):
 
 
 def setup(dp: Dispatcher):
-    dp.register_message_handler(user_command_cancel_state, state='*')
+    dp.register_message_handler(user_command_cancel_state, state='*', text=['Отмена', 'Cancel'])
