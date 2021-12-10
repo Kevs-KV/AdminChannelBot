@@ -12,7 +12,7 @@ from app.utils.valid.valid_admins_channel import valid_admin_in_channels
 
 
 async def add_channels(m: Message, _: i18n):
-    await m.answer(_('Добавьте своей канал, (просто перешлите любую публикацию из вашего канала)'))
+    await m.answer(_('Добавьте свой канал, (просто перешлите любую публикацию из вашего канала)'))
     await AddChannels.user_channels.set()
 
 
