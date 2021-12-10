@@ -1,7 +1,7 @@
 from aiogram import Dispatcher, Bot
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, ContentTypes, ReplyKeyboardRemove
-from aiogram.utils.exceptions import BotKicked
+from aiogram.utils.exceptions import BotKicked, ChatAdminRequired
 from odmantic import AIOEngine
 
 from app.keyboards.inline import ChannelUserMarkup
@@ -38,6 +38,9 @@ async def add_channels_user(m: Message, db: AIOEngine, bot: Bot, user: UserModel
         else:
             await m.answer(_('Вы не являетесь администратором канала'), reply_markup=ReplyKeyboardRemove())
     except BotKicked:
+        await m.answer(_('Бот не имеет доступа к каналу'), reply_markup=ReplyKeyboardRemove())
+        await state.finish()
+    except ChatAdminRequired:
         await m.answer(_('Бот не имеет доступа к каналу'), reply_markup=ReplyKeyboardRemove())
         await state.finish()
     except TypeError:
