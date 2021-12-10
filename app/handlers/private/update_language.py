@@ -11,7 +11,7 @@ from app.states.language_states import LanguageUser
 
 async def choice_language(m: Message, _: i18n):
     markup = ChoiceLanguageUser().get()
-    await m.answer(_('Пришлите свой язык'), reply_markup=markup)
+    await m.answer(_("🇷🇺 Выберите язык:\n\n" "🇬🇧 Choose your language:"), reply_markup=markup)
     await LanguageUser.language.set()
 
 
