@@ -35,10 +35,11 @@ class ActionTaskChannel(ReplyMarkupConstructor):
 
 class CancelUserAction(ReplyMarkupConstructor):
 
-    def get(self):
+    def get(self, _):
         schema = [1]
         actions = [{
-            'text': 'cancel'
+            'text': _('Отмена')
         }]
 
-        return self.markup(actions, schema)
+        return self.markup(actions, schema, resize_keyboard=True,
+                           one_time_keyboard=True)
