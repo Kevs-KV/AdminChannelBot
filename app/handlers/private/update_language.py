@@ -1,4 +1,4 @@
-from aiogram import Dispatcher, Bot
+from aiogram import Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery
 from odmantic import AIOEngine
@@ -25,4 +25,5 @@ async def save_language_user(query: CallbackQuery, user: UserModel, db: AIOEngin
 
 def setup(dp: Dispatcher):
     dp.register_message_handler(choice_language, commands='update_language')
-    dp.register_callback_query_handler(save_language_user, ChoiceLanguageUser.callback_data.filter(), state=LanguageUser.language)
+    dp.register_callback_query_handler(save_language_user, ChoiceLanguageUser.callback_data.filter(),
+                                       state=LanguageUser.language)
