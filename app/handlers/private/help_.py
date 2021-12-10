@@ -7,6 +7,7 @@ async def get_help_message(m: Message):
             '/start - Запустить бота',
             '/post - Создать задачу для постинга',
             '/help - Получить справку',
+            '/add_channel - Добавить свой канал',
             '/view_task - посмотреть ваши задачи',
             '/action_task - работа с задачей',
             '/update_language - изменить язык',
@@ -14,7 +15,6 @@ async def get_help_message(m: Message):
             '/my_channels - посмотреть список ващих каналов')
 
     await m.answer("\n".join(text))
-
 
 
 async def get_help_message_admin(m: Message):
@@ -25,6 +25,7 @@ async def get_help_message_admin(m: Message):
             'Отмена - /cancel_all')
 
     await m.answer("\n".join(text))
+
 
 def setup(dp: Dispatcher):
     dp.register_message_handler(get_help_message, commands="help")
