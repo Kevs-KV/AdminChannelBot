@@ -1,18 +1,20 @@
 from aiogram import Dispatcher, Bot, types
 from aiogram.dispatcher import FSMContext
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 from aiogram.utils.exceptions import BotKicked
 from odmantic import AIOEngine
 
 from app.keyboards.inline import ChoiceChannelForPost, ConfirmationMarkup
+from app.keyboards.reply import CancelUserAction
 from app.middlewares import i18n
 from app.models import UserModel
 from app.states.bot_states import PostChannelUser
-from app.utils.scheduler.scheduler_jobs import scheduler_jobs, save_db_tasks
+from app.utils.scheduler.scheduler_jobs import scheduler_jobs, save_db_tasks, del_db_tasks
+from app.utils.valid.valid_admins_channel import valid_time_posting
 
 
 async def start_message_in_post(m: Message, _: i18n):
-    await m.answer(_('Напишите текст для публикации'))
+    await m.answer(_('Напишите текст для публикации'), reply_markup=CancelUserAction().get(_))
     await PostChannelUser.text.set()
 
 
@@ -37,11 +39,12 @@ async def add_channel_for_post(query: CallbackQuery, state: FSMContext, callback
     await PostChannelUser.confirmation.set()
 
 
-async def posting_in_channel(query: CallbackQuery,  user: UserModel, bot: Bot, callback_data: dict,  _: i18n):
+async def posting_in_channel(query: CallbackQuery, user: UserModel, bot: Bot, callback_data: dict, _: i18n):
     await query.message.edit_reply_markup()
     await query.message.delete()
     if callback_data["agreement"] == 'yes':
-        await query.message.answer(_('Пришлите время постинга в формате Час/Минута/День/Мес/Год'))
+        await query.message.answer(_('Пришлите время постинга в формате Час/Минута/День/Мес/Год'),
+                                   reply_markup=CancelUserAction().get(_))
         await PostChannelUser.data_time.set()
     else:
         markup = await ChoiceChannelForPost(user, bot).get()
@@ -50,18 +53,24 @@ async def posting_in_channel(query: CallbackQuery,  user: UserModel, bot: Bot, c
 
 
 async def time_posting_in_channel(m: Message, bot: Bot, state: FSMContext, db: AIOEngine, user: UserModel, _: i18n):
-    data_time = [int(data) for data in m.text.split('/')]
-    result = await state.get_data()
-    channel_id = result.get('channel_id')
-    await m.answer(_('Готово'))
-    await state.finish()
-    user_id = m.from_user.id
-    post = user.posts + 1
-    id_tasks = f'{user_id}-{post}'
-    message_id = result.get('message_id')
-    from_chat_id = result.get('from_chat_id')
-    await save_db_tasks(bot, db, user, message_id, from_chat_id, data_time, channel_id, id_tasks)
-    return scheduler_jobs(db, user, _, message_id, from_chat_id, bot, channel_id, data_time, id_tasks)
+    try:
+        data_time = [int(data) for data in m.text.split('/')]
+        result = await state.get_data()
+        channel_id = result.get('channel_id')
+        await state.finish()
+        user_id = m.from_user.id
+        post = user.posts + 1
+        id_task = f'{user_id}-{post}'
+        message_id = result.get('message_id')
+        from_chat_id = result.get('from_chat_id')
+        await valid_time_posting(bot, user, db, data_time)
+        await save_db_tasks(bot, db, user, message_id, from_chat_id, data_time, channel_id, id_task)
+        await m.answer(_('Задача добавлена'))
+        return scheduler_jobs(db, user, _, message_id, from_chat_id, bot, channel_id, data_time, id_task)
+    except BotKicked:
+        await m.answer(_('Бот не имеет доступа к каналу'))
+    except ValueError:
+        await m.answer(_('Введите правильную дату'))
 
 
 def setup(dp: Dispatcher):
