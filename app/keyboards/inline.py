@@ -116,9 +116,9 @@ class ActionTaskChannel(InlineMarkupConstructor):
     def get(self, _):
         schema = [1, 1, 1]
         actions = [
-            {'text': 'Отмена', "callback_data": self.callback_data.new(_('Отмена'))},
-            {'text': 'Удалить', "callback_data": self.callback_data.new(_('Удалить'))},
-            {'text': 'Изменить время', "callback_data": self.callback_data.new(_('Изменить время'))}]
+            {'text': _('Отмена'), "callback_data": self.callback_data.new('Отмена')},
+            {'text': _('Удалить'), "callback_data": self.callback_data.new('Удалить')},
+            {'text': _('Изменить время'), "callback_data": self.callback_data.new('Изменить время')}]
 
         return self.markup(actions, schema)
 
