@@ -18,7 +18,7 @@ async def valid_admin_in_channels(m: Message, admins_chat, user_id, _: i18n):
         return False
 
 
-async def valid_time_posting(bot: Bot, user: UserModel, db: AIOEngine, data_time):
+async def valid_time_posting(user: UserModel, data_time):
     hour, minute, day, month, year = data_time
     user_timezone = timezone(user.timezone)
     if datetime.now(user_timezone) < user_timezone.localize(datetime(year, month, day, hour, minute)):
