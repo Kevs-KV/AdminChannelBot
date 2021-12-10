@@ -1,6 +1,6 @@
 from aiogram import Dispatcher, Bot
 from aiogram.dispatcher import FSMContext
-from aiogram.types import Message, ContentTypes
+from aiogram.types import Message, ContentTypes, ReplyKeyboardRemove
 from aiogram.utils.exceptions import BotKicked
 from odmantic import AIOEngine
 
@@ -27,20 +27,20 @@ async def add_channels_user(m: Message, db: AIOEngine, bot: Bot, user: UserModel
         valid = await valid_admin_in_channels(m, admins_chat, user_id, _)
         if valid:
             if channel not in user.channels:
-                await m.answer(_('Канал добавлен'))
+                await m.answer(_('Канал добавлен'), reply_markup=ReplyKeyboardRemove())
                 user.channels.append(channel)
                 await db.save(user)
                 await state.finish()
             else:
-                await m.answer(_('Канал уже был дабавлен'))
+                await m.answer(_('Канал уже был дабавлен'), reply_markup=ReplyKeyboardRemove())
                 await state.finish()
         else:
-            await m.answer(_('Вы не являетесь администратором канала'))
+            await m.answer(_('Вы не являетесь администратором канала'), reply_markup=ReplyKeyboardRemove())
     except BotKicked:
-        await m.answer(_('Бот не имеет доступа к каналу'))
+        await m.answer(_('Бот не имеет доступа к каналу'), reply_markup=ReplyKeyboardRemove())
         await state.finish()
     except TypeError:
-        await m.answer(_('Перешлите публикацию из канала'))
+        await m.answer(_('Перешлите публикацию из канала'), reply_markup=ReplyKeyboardRemove())
 
 
 async def user_channels(m: Message, user: UserModel, bot: Bot, _: i18n):
