@@ -69,8 +69,8 @@ async def time_posting_in_channel(m: Message, bot: Bot, state: FSMContext, db: A
         await m.answer(_('Бот не имеет доступа к каналу'))
         await state.finish()
     except ValueError:
-        await m.answer(_('Введите правильную дату'))
-        await PostChannelUser.channel.set()
+        await m.answer(_('Вы ввели неправильную дату'))
+        await state.finish()
 
 
 def setup(dp: Dispatcher):
