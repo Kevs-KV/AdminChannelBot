@@ -67,8 +67,10 @@ async def time_posting_in_channel(m: Message, bot: Bot, state: FSMContext, db: A
         return scheduler_jobs(db, user, _, message_id, from_chat_id, bot, channel_id, data_time, id_task)
     except BotKicked:
         await m.answer(_('Бот не имеет доступа к каналу'))
+        await state.finish()
     except ValueError:
         await m.answer(_('Введите правильную дату'))
+        await PostChannelUser.channel.set()
 
 
 def setup(dp: Dispatcher):
