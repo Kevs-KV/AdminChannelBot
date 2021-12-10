@@ -61,7 +61,7 @@ async def time_posting_in_channel(m: Message, bot: Bot, state: FSMContext, db: A
         id_task = f'{user_id}-{post}'
         message_id = result.get('message_id')
         from_chat_id = result.get('from_chat_id')
-        await valid_time_posting(bot, user, db, data_time)
+        await valid_time_posting(user, data_time)
         await save_db_tasks(bot, db, user, message_id, from_chat_id, data_time, channel_id, id_task)
         await m.answer(_('Задача добавлена'))
         return scheduler_jobs(db, user, _, message_id, from_chat_id, bot, channel_id, data_time, id_task)
