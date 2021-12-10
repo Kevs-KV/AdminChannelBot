@@ -5,6 +5,7 @@ from aiogram.utils.exceptions import BotKicked
 from odmantic import AIOEngine
 
 from app.keyboards.inline import ChannelUserMarkup
+from app.keyboards.reply import CancelUserAction
 from app.middlewares import i18n
 from app.models import UserModel
 from app.states.bot_states import AddChannels
@@ -12,7 +13,8 @@ from app.utils.valid.valid_admins_channel import valid_admin_in_channels
 
 
 async def add_channels(m: Message, _: i18n):
-    await m.answer(_('Добавьте свой канал, (просто перешлите любую публикацию из вашего канала)'))
+    await m.answer(_('Добавьте свой канал, (просто перешлите любую публикацию из вашего канала)'),
+                   reply_markup=CancelUserAction().get(_))
     await AddChannels.user_channels.set()
 
 
