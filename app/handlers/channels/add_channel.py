@@ -27,6 +27,7 @@ async def add_channels_user(m: Message, db: AIOEngine, bot: Bot, user: UserModel
         valid = await valid_admin_in_channels(m, admins_chat, user_id, _)
         if valid:
             if channel not in user.channels:
+
                 await m.answer(_('Канал добавлен'), reply_markup=ReplyKeyboardRemove())
                 user.channels.append(channel)
                 await db.save(user)
