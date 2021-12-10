@@ -83,6 +83,7 @@ class ChoiceChannelForPost(InlineMarkupConstructor):
         except ValueError:
             return None
 
+
 class TaskChannelMarkup(InlineMarkupConstructor):
     callback_data = CallbackData('id', 'value')
 
@@ -91,15 +92,18 @@ class TaskChannelMarkup(InlineMarkupConstructor):
         self.user = user
         self.bot = bot
 
-    async def get(self):
+    async def get(self, _):
         try:
             tasks_user = self.user.tasks
             schema = []
             actions = []
             for task in tasks_user:
                 title_channel, channel_id, message_id, from_chat_id, data_time = tasks_user[task]
+                hour, minute, day, month, year = data_time
                 actions.append(
-                    {'text': f'{title_channel} {data_time}', "callback_data": self.callback_data.new(task)})
+                    {'text': _('Канал: {} дата: {}/{}/{} в {}:{}').format(title_channel, day, month, year, hour,
+                                                                          minute),
+                     "callback_data": self.callback_data.new(task)})
                 schema.append(1)
             return self.markup(actions, schema)
         except ValueError:

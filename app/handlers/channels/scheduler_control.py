@@ -17,14 +17,15 @@ async def get_list_posting(m: Message, user: UserModel, _: i18n):
         list_posting = []
         for task in user.tasks:
             title = user.tasks[task][0]
-            list_posting.append(f'{title} {user.tasks[task][-1]}')
+            hour, minute, day, month, year = user.tasks[task][-1]
+            list_posting.append(_('Канал: {} дата: {}/{}/{} в {}:{}').format(title, day, month, year, hour, minute))
         await m.answer("\n".join(list_posting))
     except MessageTextIsEmpty:
         await m.answer(_('Нет задач'))
 
 
 async def scheduler_jobs_list(m: Message, user: UserModel, bot: Bot, _: i18n):
-    list_task = await TaskChannelMarkup(user, bot).get()
+    list_task = await TaskChannelMarkup(user, bot).get(_)
     await m.answer(_('Список задач в палировщике'), reply_markup=list_task)
 
 
@@ -68,8 +69,8 @@ async def new_time_for_post(m: Message, bot: Bot, user: UserModel, state: FSMCon
 
 
 def setup(dp: Dispatcher):
-    dp.register_message_handler(get_list_posting, commands='jobs')
-    dp.register_message_handler(scheduler_jobs_list, commands='view_task')
+    dp.register_message_handler(get_list_posting, commands='view_task')
+    dp.register_message_handler(scheduler_jobs_list, commands='action_task')
     dp.register_callback_query_handler(view_post, TaskChannelMarkup.callback_data.filter())
     dp.register_message_handler(action_channel, state=ActionForTask.action)
     dp.register_message_handler(new_time_for_post, state=ActionForTask.data_time)
