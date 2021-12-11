@@ -4,15 +4,15 @@ from aiogram.types import Message
 
 async def get_help_message(m: Message):
     text = ('Список команд:',
-            '/start - Запустить бота',
-            '/post - Создать задачу для постинга',
-            '/help - Получить справку',
-            '/add_channel - Добавить свой канал',
-            '/view_task - посмотреть ваши задачи',
+            '/start - запустить бота',
+            '/post - создать задачу для постинга',
+            '/help - получить справку',
+            '/add_channel - добавить канал',
+            '/view_task - посмотреть задачи',
             '/action_task - работа с задачей',
             '/update_language - изменить язык',
             '/timezone - изменить часовой пояс',
-            '/my_channels - посмотреть список ващих каналов')
+            '/my_channels - посмотреть список каналов')
 
     await m.answer("\n".join(text))
 
