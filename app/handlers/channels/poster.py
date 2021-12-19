@@ -70,7 +70,6 @@ async def time_posting_in_channel(m: Message, bot: Bot, state: FSMContext, db: A
         await state.finish()
     except ValueError:
         await m.answer(_('Вы ввели неправильную дату'))
-        await state.finish()
 
 
 def setup(dp: Dispatcher):
