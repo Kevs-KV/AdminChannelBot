@@ -26,7 +26,10 @@ async def get_list_posting(m: Message, user: UserModel, _: i18n):
 
 async def scheduler_jobs_list(m: Message, user: UserModel, bot: Bot, _: i18n):
     list_task = await TaskChannelMarkup(user, bot).get(_)
-    await m.answer(_('Список задач в палировщике'), reply_markup=list_task)
+    if list_task:
+        await m.answer(_('Список задач в плаировщике'), reply_markup=list_task)
+    else:
+        await m.answer(_('Нет задач'))
 
 
 async def view_post(query: CallbackQuery, user: UserModel, state: FSMContext, bot: Bot, _: i18n, callback_data: dict):
